@@ -34,6 +34,14 @@
     'loading…', 'finding…', 'searching…'
   ];
 
+  function getRandomLoadTime() {
+    // Weighted random: 40% for 1s, 40% for 2s, 20% for 3s
+    const rand = Math.random();
+    if (rand < 0.4) return 1000;      // 1s
+    if (rand < 0.8) return 2000;      // 2s
+    return 3000;                      // 3s
+  }
+
   /* ----------------------------------------------------------
      4. DOM REFS
      ---------------------------------------------------------- */
@@ -58,6 +66,7 @@
   const drawerOverlay   = $('drawerOverlay');
   const closeDrawerBtn  = $('closeDrawerBtn');
   const favoritesList   = $('favoritesList');
+  const landingRandomBtn = $('landingRandomBtn');
 
   /* ----------------------------------------------------------
      5. DATABASE INITIALIZATION
@@ -110,7 +119,11 @@
     updateFavButtonState();
     openNewTabBtn.disabled = false;
 
-    loadTimeoutId = setTimeout(handleLoadTimeout, LOAD_TIMEOUT_MS);
+    // Hide loading after random time (1/2/3s with 1 and 2 most common)
+    const loadTime = getRandomLoadTime();
+    loadTimeoutId = setTimeout(() => {
+      hideLoading();
+    }, loadTime);
   }
 
   function updateReadout(site) {
@@ -127,6 +140,7 @@
   function showLoading() {
     loadingLabel.textContent = LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
     loadingOverlay.classList.remove('hidden');
+    randomDbIcon.classList.add('animate-spin');
   }
   function hideLoading() {
     loadingOverlay.classList.add('hidden');
@@ -143,8 +157,7 @@
 
   iframe.addEventListener('load', () => {
     if (iframe.src === 'about:blank') return;
-    clearTimeout(loadTimeoutId);
-    hideLoading();
+    // No longer needed - we use fixed 1s timeout instead
   });
 
   /* ----------------------------------------------------------
@@ -287,6 +300,7 @@
      8. EVENT WIRING
      ---------------------------------------------------------- */
   randomDbBtn.addEventListener('click', randomFromDb);
+  landingRandomBtn.addEventListener('click', randomFromDb);
 
   backBtn.addEventListener('click', () => {
     if (historyIndex > 0) {

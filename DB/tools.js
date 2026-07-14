@@ -1,4 +1,4 @@
-var DB_GENERAL = [
+var DB_TOOLS = [
   "https://excalidraw.com",
   "https://www.tldraw.com",
   "https://jsfiddle.net/",
