@@ -1,0 +1,52 @@
+[
+  {
+    "name": "elgooG — Pac-Man",
+    "url": "https://elgoog.im/pacman/",
+    "description": "The classic arcade doodle, mirrored for easy embedding."
+  },
+  {
+    "name": "elgooG — Snake",
+    "url": "https://elgoog.im/snake/",
+    "description": "Google's hidden Snake game, playable anywhere."
+  },
+  {
+    "name": "elgooG — Atari Breakout",
+    "url": "https://elgoog.im/atari-breakout/",
+    "description": "Break the bricks in this retro Atari-style doodle."
+  },
+  {
+    "name": "elgooG — Minesweeper",
+    "url": "https://elgoog.im/minesweeper/",
+    "description": "The timeless logic-puzzle classic, browser-playable."
+  },
+  {
+    "name": "elgooG — Tic-Tac-Toe",
+    "url": "https://elgoog.im/tic-tac-toe/",
+    "description": "Play against a friend or the computer in this quick classic."
+  },
+  {
+    "name": "elgooG — Zerg Rush",
+    "url": "https://elgoog.im/zerg-rush/",
+    "description": "Defend Google's search results from an army of invading O's."
+  },
+  {
+    "name": "elgooG — Memory Match",
+    "url": "https://elgoog.im/memory/",
+    "description": "A simple, satisfying card-matching memory game."
+  },
+  {
+    "name": "2048",
+    "url": "https://gabrielecirulli.github.io/2048/",
+    "description": "The original, addictive number-merging puzzle game."
+  },
+  {
+    "name": "Flappy Bird (open-source clone)",
+    "url": "https://nebez.github.io/flappybird/",
+    "description": "A faithful browser recreation of the notoriously hard classic."
+  },
+  {
+    "name": "Hextris",
+    "url": "http://www.hextris.io/",
+    "description": "A fast-paced hexagonal spin on block-matching puzzle games."
+  }
+]

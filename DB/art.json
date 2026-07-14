@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Wikipedia — Random Article",
+    "url": "https://en.wikipedia.org/wiki/Special:Random",
+    "description": "A random doorway into the encyclopedia — great for odd rabbit holes."
+  },
+  {
+    "name": "Wikimedia Commons — Random File",
+    "url": "https://commons.wikimedia.org/wiki/Special:Random/File",
+    "description": "A randomly surfaced piece of free visual media."
+  },
+  {
+    "name": "Wikisource — Random Text",
+    "url": "https://en.wikisource.org/wiki/Special:Random",
+    "description": "A random page from a library of free source texts and literature."
+  },
+  {
+    "name": "Project Gutenberg",
+    "url": "https://www.gutenberg.org/",
+    "description": "Free classic literature, poetry, and public-domain writing."
+  },
+  {
+    "name": "Internet Archive — Texts",
+    "url": "https://archive.org/details/texts",
+    "description": "Scanned books, manuscripts and ephemera from centuries past."
+  },
+  {
+    "name": "Three.js Examples",
+    "url": "https://threejs.org/examples/",
+    "description": "A gallery of real-time 3D and generative WebGL demos."
+  },
+  {
+    "name": "NASA — Astronomy Picture of the Day",
+    "url": "https://apod.nasa.gov/apod/astropix.html",
+    "description": "Daily deep-space photography with expert commentary."
+  },
+  {
+    "name": "OpenProcessing — Discover",
+    "url": "https://openprocessing.org/discover/#/",
+    "description": "A community gallery of generative art coded in p5.js and Processing."
+  },
+  {
+    "name": "Weavesilk",
+    "url": "http://weavesilk.com/",
+    "description": "A meditative, symmetrical generative drawing toy."
+  },
+  {
+    "name": "Patatap",
+    "url": "http://www.patatap.com/",
+    "description": "An audio-visual instrument — every keystroke triggers sound and animation."
+  }
+]
