@@ -3,8 +3,46 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Random Website — jump anywhere</title>
-<meta name="description" content="Random Website: press a button, land on a curated corner of the internet." />
+<title>Random Website — Discover Curated Websites Across the Internet</title>
+<meta name="description" content="Random Website: Explore curated websites from across the web. Press a button and discover interesting corners of the internet including tools, games, art, news, and more." />
+<meta name="keywords" content="random website, website discovery, curated websites, explore internet, random web surfing, website directory, interesting websites" />
+<meta name="author" content="Random Website" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="index.html" />
+<link rel="icon" type="image/x-icon" href="Assets/random-website-favicon.png" />
+
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="index.html" />
+<meta property="og:title" content="Random Website — Discover Curated Websites Across the Internet" />
+<meta property="og:description" content="Explore curated websites from across the web. Press a button and discover interesting corners of the internet including tools, games, art, news, and more." />
+<meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="index.html" />
+<meta property="twitter:title" content="Random Website — Discover Curated Websites Across the Internet" />
+<meta property="twitter:description" content="Explore curated websites from across the web. Press a button and discover interesting corners of the internet including tools, games, art, news, and more." />
+<meta property="twitter:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80" />
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Random Website",
+  "description": "A curated website discovery tool that lets users explore interesting corners of the internet across various categories including tools, games, art, news, and more.",
+  "url": "index.html",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,6 +62,9 @@
 <script src="DB/tools.js"></script>
 <script src="DB/games.js"></script>
 <script src="DB/art.js"></script>
+<script src="DB/funny.js"></script>
+<script src="DB/sports.js"></script>
+<script src="DB/news.js"></script>
 </head>
 
 <body class="h-screen w-screen overflow-hidden flex flex-col">

@@ -15,7 +15,10 @@
     general: { urls: DB_GENERAL, label: 'General' },
     tools: { urls: DB_TOOLS, label: 'Tools' },
     games: { urls: DB_GAMES, label: 'Games' },
-    art: { urls: DB_ART, label: 'Art' }
+    art: { urls: DB_ART, label: 'Art' },
+    funny: { urls: DB_FUNNY, label: 'Funny' },
+    sports: { urls: DB_SPORTS, label: 'Sports' },
+    news: { urls: DB_NEWS, label: 'News' }
   };
 
   
