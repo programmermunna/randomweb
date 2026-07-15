@@ -31,6 +31,8 @@
   let loadTimeoutId = null;
   let currentSource = null;
   let favorites = [];      // array of { url, name, addedAt }
+  let autoClickTimer = null; // auto-click timer interval
+  let autoClickInterval = null; // auto-click interval in seconds
 
   const LOAD_TIMEOUT_MS = 6000;
   const LOADING_MESSAGES = [
@@ -63,7 +65,6 @@
   const randomDbIcon    = $('randomDbIcon');
   const openNewTabBtn   = $('openNewTabBtn');
   const keyboardHelpBtn = $('keyboardHelpBtn');
-  const dbStatus        = $('dbStatus');
   const addFavBtn       = $('addFavBtn');
   const favBtn          = $('favBtn');
   const favoritesDrawer = $('favoritesDrawer');
@@ -71,6 +72,8 @@
   const closeDrawerBtn  = $('closeDrawerBtn');
   const favoritesList   = $('favoritesList');
   const landingRandomBtn = $('landingRandomBtn');
+  const autoClickBtn    = $('autoClickBtn');
+  const autoClickMenu   = $('autoClickMenu');
 
   /* ----------------------------------------------------------
      5. DATABASE INITIALIZATION
@@ -91,7 +94,6 @@
     }
 
     categorySelect.value = 'all';
-    dbStatus.textContent = `${Object.keys(DB_DATA).length} categories loaded`;
   }
 
   /* ----------------------------------------------------------
@@ -266,7 +268,63 @@
   }
 
   /* ----------------------------------------------------------
-     8. RANDOM DB — from curated URL arrays
+     8. AUTO CLICK TIMER
+     ---------------------------------------------------------- */
+  function toggleAutoClickMenu() {
+    autoClickMenu.classList.toggle('hidden');
+  }
+
+  function startAutoClick(intervalSeconds) {
+    stopAutoClick(); // Clear any existing timer
+    autoClickInterval = intervalSeconds;
+    autoClickBtn.classList.add('ctl-btn--active');
+    autoClickMenu.classList.add('hidden');
+    
+    // Start the interval
+    autoClickTimer = setInterval(() => {
+      randomFromDb();
+    }, intervalSeconds * 1000);
+  }
+
+  function stopAutoClick() {
+    if (autoClickTimer) {
+      clearInterval(autoClickTimer);
+      autoClickTimer = null;
+    }
+    autoClickInterval = null;
+    autoClickBtn.classList.remove('ctl-btn--active');
+    autoClickMenu.classList.add('hidden');
+  }
+
+  function toggleAutoClick() {
+    if (autoClickTimer) {
+      // If running, stop it
+      stopAutoClick();
+    } else if (autoClickInterval) {
+      // If stopped but has interval, resume
+      startAutoClick(autoClickInterval);
+    } else {
+      // If no interval set, show menu
+      toggleAutoClickMenu();
+    }
+  }
+
+  function handleAutoClickMenuClick(e) {
+    const item = e.target.closest('.auto-click-menu-item');
+    if (!item) return;
+
+    if (item.classList.contains('auto-click-stop')) {
+      stopAutoClick();
+    } else {
+      const time = parseInt(item.dataset.time);
+      if (time) {
+        startAutoClick(time);
+      }
+    }
+  }
+
+  /* ----------------------------------------------------------
+     9. RANDOM DB — from curated URL arrays
      ---------------------------------------------------------- */
   function randomFromDb() {
     const selected = categorySelect.value || 'all';
@@ -352,6 +410,18 @@
         e.preventDefault();
         showKeyboardHelp();
         break;
+      case '0':
+        e.preventDefault();
+        history = [];
+        historyIndex = -1;
+        iframe.src = 'about:blank';
+        emptyState.classList.remove('hidden');
+        errorOverlay.classList.add('hidden');
+        urlReadout.textContent = 'press Random';
+        updateNavButtons();
+        updateFavButtonState();
+        openNewTabBtn.disabled = true;
+        break;
     }
   }
 
@@ -367,6 +437,7 @@
             <span>Toggle favorite</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">F</kbd>
             <span>Open in new tab</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">O</kbd>
             <span>Close drawer</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">Esc</kbd>
+            <span>Reset to home</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">0</kbd>
             <span>Show help</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">?</kbd>
           </div>
           <button id="closeHelpBtn" style="margin-top:20px;padding:8px 16px;background:var(--accent);color:white;border:none;border-radius:6px;cursor:pointer;">Close</button>
@@ -429,8 +500,18 @@
 
   keyboardHelpBtn.addEventListener('click', showKeyboardHelp);
 
+  autoClickBtn.addEventListener('click', toggleAutoClick);
+  autoClickMenu.addEventListener('click', handleAutoClickMenuClick);
+
+  // Close auto-click menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.auto-click-wrapper')) {
+      autoClickMenu.classList.add('hidden');
+    }
+  });
+
   /* ----------------------------------------------------------
-     9. INIT
+     10. INIT
      ---------------------------------------------------------- */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {

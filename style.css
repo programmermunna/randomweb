@@ -90,6 +90,67 @@ body{
   gap: 8px;
 }
 
+/* ---- Auto Click Button ---- */
+.auto-click-wrapper{
+  position: relative;
+}
+
+.auto-click-menu{
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-width: 80px;
+  z-index: 50;
+  overflow: hidden;
+}
+
+.auto-click-menu-item{
+  padding: 8px 16px;
+  font-size: 0.75rem;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.auto-click-menu-item:hover{
+  background: rgba(139, 108, 255, 0.1);
+}
+
+.auto-click-stop{
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.auto-click-stop:hover{
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.ctl-btn--active{
+  background: rgba(139, 108, 255, 0.15) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+/* ---- Robot Animation ---- */
+.ctl-btn--active #autoClickIcon{
+  animation: robotBounce 0.6s ease-in-out infinite;
+}
+
+@keyframes robotBounce{
+  0%, 100%{
+    transform: translateY(0);
+  }
+  50%{
+    transform: translateY(-3px);
+  }
+}
+
 .header-controls{
   display: flex;
   align-items: center;
@@ -527,6 +588,227 @@ body{
 .drawer-overlay:not(.hidden){
   opacity: 1;
   pointer-events: auto;
+}
+
+/* ---- Language Selector Overlay ---- */
+.language-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 199;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.language-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.language-overlay:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---- Language Selector Popup ---- */
+.language-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  max-width: 90vw;
+  max-height: 75vh;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.language-popup.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.language-popup:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.language-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.language-popup-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.close-language-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.2s ease;
+}
+
+.close-language-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.language-search {
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.language-search-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.9rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.language-search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(139, 108, 255, 0.15);
+}
+
+.language-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.language-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  border: 1px solid transparent;
+}
+
+.language-item:hover {
+  background: rgba(139, 108, 255, 0.08);
+  transform: translateX(2px);
+}
+
+.language-item.active {
+  background: rgba(139, 108, 255, 0.12);
+  border-color: rgba(139, 108, 255, 0.3);
+}
+
+.language-flag {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.language-name {
+  flex: 1;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+}
+
+.language-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #666;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ---- Google Translate Widget Styling ---- */
+#google_translate_element {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  visibility: hidden;
+}
+
+/* Hide Google Translate banner */
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+/* ---- Language Popup Mobile ---- */
+@media (max-width: 640px) {
+  .language-popup {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+
+  .language-popup-header {
+    padding: 12px 16px;
+  }
+
+  .language-popup-title {
+    font-size: 1rem;
+  }
+
+  .language-search {
+    padding: 10px 16px;
+  }
+
+  .language-search-input {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .language-item {
+    padding: 10px 12px;
+  }
+
+  .language-name {
+    font-size: 0.85rem;
+  }
+
+  .language-code {
+    font-size: 0.7rem;
+  }
 }
 
 /* ---- Landing mobile responsive ---- */

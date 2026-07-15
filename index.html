@@ -57,6 +57,22 @@
 <!-- Project styles -->
 <link rel="stylesheet" href="style.css">
 
+<!-- Google Translate Cookie Setup (must run before widget loads) -->
+<script>
+(function() {
+  var savedLang = localStorage.getItem('selectedLanguage');
+  if (savedLang && savedLang !== 'en') {
+    var expiry = new Date();
+    expiry.setTime(expiry.getTime() + (30 * 24 * 60 * 60 * 1000));
+    var value = '/en/' + savedLang;
+    var domain = window.location.hostname;
+    document.cookie = 'googtrans=' + value + '; path=/; expires=' + expiry.toUTCString() + '; SameSite=None; Secure';
+    document.cookie = 'googtrans=' + value + '; path=/; domain=' + domain + '; expires=' + expiry.toUTCString() + '; SameSite=None; Secure';
+    localStorage.setItem('googtrans', value);
+  }
+})();
+</script>
+
 <!-- DB files -->
 <script src="DB/general.js"></script>
 <script src="DB/tools.js"></script>
@@ -113,6 +129,19 @@
       </div>
 
       <div class="control-group control-group--actions">
+        <div class="auto-click-wrapper">
+          <button id="autoClickBtn" title="Auto Click Timer" class="ctl-btn icon-btn">
+            <svg id="autoClickIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+          </button>
+          <div id="autoClickMenu" class="auto-click-menu hidden">
+            <div class="auto-click-menu-item" data-time="5">5s</div>
+            <div class="auto-click-menu-item" data-time="10">10s</div>
+            <div class="auto-click-menu-item" data-time="15">15s</div>
+            <div class="auto-click-menu-item" data-time="30">30s</div>
+            <div class="auto-click-menu-item" data-time="60">1m</div>
+            <div class="auto-click-menu-item auto-click-stop">Stop</div>
+          </div>
+        </div>
         <button id="addFavBtn" title="Add to Favorites" class="ctl-btn icon-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
         </button>
@@ -184,6 +213,35 @@
       </div>
     </div>
   </div>
+
+  <!-- Language Selector Popup -->
+  <div id="languageOverlay" class="language-overlay hidden"></div>
+  <div id="languagePopup" class="language-popup hidden">
+    <div class="language-popup-header">
+      <h3 class="language-popup-title">Select Language</h3>
+      <button id="closeLanguagePopup" class="close-language-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="language-search">
+      <input type="text" id="languageSearch" placeholder="Search language..." class="language-search-input">
+    </div>
+    <div id="languageList" class="language-list"></div>
+  </div>
+
+  <!-- Google Translate Widget (hidden) -->
+  <div id="google_translate_element" style="position: absolute; left: -9999px; top: -9999px; visibility: hidden;"></div>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'af,ar,hy,az,eu,be,bn,bg,ca,ceb,ny,zh-CN,zh-TW,co,hr,cs,da,nl,en,eo,et,tl,fi,fr,fy,gl,ka,de,el,gu,ht,ha,haw,iw,hi,hmn,hu,is,ig,id,ga,it,ja,jw,kn,kk,km,ko,ku,ky,lo,la,lv,lt,lb,mk,mg,ms,ml,mt,mi,mr,mn,my,ne,no,or,ps,fa,pl,pt,pa,ro,ru,sm,gd,sr,st,sd,si,sk,sl,so,es,su,sw,sv,ty,ta,te,th,tr,uk,ur,uz,vi,cy,xh,yi,yo,zu',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <script src="app.js"></script>
 </body>
