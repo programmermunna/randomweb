@@ -275,12 +275,12 @@ body{
 
 .landing-text{
   position: absolute;
-  bottom: 0;
+  top: 50%;
   left: 0;
   right: 0;
+  transform: translateY(-50%);
   padding: 40px 24px;
   text-align: center;
-  background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
 }
 
 .landing-title{

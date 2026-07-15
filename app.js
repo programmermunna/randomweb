@@ -82,18 +82,15 @@
     allOption.textContent = 'All categories';
     categorySelect.appendChild(allOption);
 
-    let totalSites = 0;
-
     for (const [key, data] of Object.entries(DB_DATA)) {
       const opt = document.createElement('option');
       opt.value = key;
-      opt.textContent = `${data.label} (${data.urls.length})`;
+      opt.textContent = data.label;
       categorySelect.appendChild(opt);
-      totalSites += data.urls.length;
     }
 
     categorySelect.value = 'all';
-    dbStatus.textContent = `${Object.keys(DB_DATA).length} categories · ${totalSites} sites loaded`;
+    dbStatus.textContent = `${Object.keys(DB_DATA).length} categories loaded`;
   }
 
   /* ----------------------------------------------------------
