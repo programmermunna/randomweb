@@ -62,6 +62,7 @@
   const randomDbBtn     = $('randomDbBtn');
   const randomDbIcon    = $('randomDbIcon');
   const openNewTabBtn   = $('openNewTabBtn');
+  const keyboardHelpBtn = $('keyboardHelpBtn');
   const dbStatus        = $('dbStatus');
   const addFavBtn       = $('addFavBtn');
   const favBtn          = $('favBtn');
@@ -297,8 +298,97 @@
   }
 
   /* ----------------------------------------------------------
-     8. EVENT WIRING
+     8. KEYBOARD SHORTCUTS
      ---------------------------------------------------------- */
+  function handleKeyboardShortcuts(e) {
+    // Ignore if user is typing in an input field
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
+      return;
+    }
+
+    switch (e.key) {
+      case ' ':
+      case 'Space':
+        e.preventDefault();
+        randomFromDb();
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        if (historyIndex > 0) {
+          historyIndex--;
+          loadSite(history[historyIndex], false);
+        }
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        if (historyIndex < history.length - 1) {
+          historyIndex++;
+          loadSite(history[historyIndex], false);
+        }
+        break;
+      case 'f':
+      case 'F':
+        e.preventDefault();
+        const site = currentSite();
+        if (site) {
+          if (isFavorite(site.url)) {
+            removeFavorite(site.url);
+          } else {
+            addFavorite(site.url);
+          }
+        }
+        break;
+      case 'Escape':
+        e.preventDefault();
+        closeDrawer();
+        break;
+      case 'o':
+      case 'O':
+        e.preventDefault();
+        const currentSite = currentSite();
+        if (currentSite) window.open(currentSite.url, '_blank', 'noopener,noreferrer');
+        break;
+      case '?':
+        e.preventDefault();
+        showKeyboardHelp();
+        break;
+    }
+  }
+
+  function showKeyboardHelp() {
+    const helpContent = `
+      <div class="keyboard-help-overlay" id="keyboardHelp" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;">
+        <div style="background:var(--bg-primary);padding:30px;border-radius:12px;max-width:400px;color:var(--text-primary);">
+          <h2 style="margin:0 0 20px 0;">Keyboard Shortcuts</h2>
+          <div style="display:grid;grid-template-columns:1fr auto;gap:10px;">
+            <span>Random site</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">Space</kbd>
+            <span>Back</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">←</kbd>
+            <span>Next</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">→</kbd>
+            <span>Toggle favorite</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">F</kbd>
+            <span>Open in new tab</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">O</kbd>
+            <span>Close drawer</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">Esc</kbd>
+            <span>Show help</span><kbd style="background:var(--bg-secondary);padding:4px 8px;border-radius:4px;font-family:monospace;">?</kbd>
+          </div>
+          <button id="closeHelpBtn" style="margin-top:20px;padding:8px 16px;background:var(--accent);color:white;border:none;border-radius:6px;cursor:pointer;">Close</button>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', helpContent);
+    document.getElementById('closeHelpBtn').addEventListener('click', () => {
+      document.getElementById('keyboardHelp').remove();
+    });
+    document.getElementById('keyboardHelp').addEventListener('click', (e) => {
+      if (e.target.id === 'keyboardHelp') {
+        e.target.remove();
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------
+     9. EVENT WIRING
+     ---------------------------------------------------------- */
+  document.addEventListener('keydown', handleKeyboardShortcuts);
+
   randomDbBtn.addEventListener('click', randomFromDb);
   landingRandomBtn.addEventListener('click', randomFromDb);
 
@@ -336,6 +426,8 @@
 
   closeDrawerBtn.addEventListener('click', closeDrawer);
   drawerOverlay.addEventListener('click', closeDrawer);
+
+  keyboardHelpBtn.addEventListener('click', showKeyboardHelp);
 
   /* ----------------------------------------------------------
      9. INIT
