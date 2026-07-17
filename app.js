@@ -1,5 +1,5 @@
 /* ============================================================
-   Random Website — app.js
+   Browse Any — app.js
    Simple version: loads URL arrays from DB/, random selection,
    history navigation, and iframe error handling.
    ============================================================ */
@@ -167,7 +167,7 @@
      7. FAVORITES
      ---------------------------------------------------------- */
   function loadFavorites() {
-    const stored = localStorage.getItem('wayfinder_favorites');
+    const stored = localStorage.getItem('browseany_favorites');
     if (stored) {
       try {
         favorites = JSON.parse(stored);
@@ -178,7 +178,7 @@
   }
 
   function saveFavorites() {
-    localStorage.setItem('wayfinder_favorites', JSON.stringify(favorites));
+    localStorage.setItem('browseany_favorites', JSON.stringify(favorites));
   }
 
   function isFavorite(url) {
